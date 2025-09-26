@@ -45,10 +45,31 @@ npm install
 
 
 
+
 Start the frontend:
 ```bash
 npm run dev
 ```
+
+---
+
+## Using ngrok for Mobile API Access
+
+If you are running the mobile app on a device that is NOT on the same WiFi as your backend, or using Expo Go with mobile data, you must use a public URL for your backend API. You can use [ngrok](https://ngrok.com/) to expose your local backend:
+
+1. Start your backend server (see above).
+2. In a new terminal, run:
+	```bash
+	ngrok http 5000
+	```
+3. Copy the HTTPS forwarding URL shown by ngrok (e.g., `https://17656eaa7fcf.ngrok-free.app`).
+4. In your mobile app's `src/config/api.js`, set:
+	```js
+	let API_BASE_URL = "https://17656eaa7fcf.ngrok-free.app/api";
+	```
+5. Save and restart your Expo Go app.
+
+Now your mobile app can access your backend from anywhere.
 
 
 ## 4. Mobile App Setup

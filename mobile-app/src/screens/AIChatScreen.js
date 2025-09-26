@@ -17,7 +17,7 @@ const AIChatScreen = () => {
   const [loading, setLoading] = useState(false)
   const flatListRef = useRef(null)
 
-  const API_BASE_URL = "http://10.0.2.2:5000/api"
+  const API_BASE_URL = "https://physcho.onrender.com/api"
 
   useEffect(() => {
     if (messages.length > 0) {

@@ -26,7 +26,7 @@ const BookingsScreen = () => {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState("book") // 'book' or 'my-bookings'
 
-  const API_BASE_URL = "http://localhost:5000/api"
+  const API_BASE_URL = "https://physcho.onrender.com/api"
 
   const timeSlots = [
     "09:00 AM",

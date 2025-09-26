@@ -30,10 +30,10 @@ const ForumScreen = () => {
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
-  const API_BASE_URL =
-    Platform.OS === "android"
-      ? "http://10.0.2.2:5000/api"
-      : "http://localhost:5000/api"
+  const API_BASE_URL = "https://physcho.onrender.com/api"
+    // Platform.OS === "android"
+    //   ? "http://10.0.2.2:5000/api"
+    //   : "http://localhost:5000/api"
 
   useEffect(() => {
     loadPosts()

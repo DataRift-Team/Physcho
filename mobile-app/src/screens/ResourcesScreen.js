@@ -21,7 +21,7 @@ const ResourcesScreen = () => {
   const [selectedType, setSelectedType] = useState("all")
   const [loading, setLoading] = useState(true)
 
-  const API_BASE_URL = "http://localhost:5000/api"
+  const API_BASE_URL = "https://physcho.onrender.com/api"
 
   const resourceTypes = [
     { id: "all", name: "All Types", icon: "apps" },

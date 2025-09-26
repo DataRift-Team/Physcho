@@ -12,7 +12,7 @@ const ScreeningScreen = () => {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const API_BASE_URL = "http://localhost:5000/api"
+  const API_BASE_URL = "https://physcho.onrender.com/api"
 
   const testTypes = [
     {
@@ -48,24 +48,62 @@ const ScreeningScreen = () => {
     { label: "Nearly every day", value: 3 },
   ]
 
-  const loadQuestions = async (testType) => {
-    try {
-      setLoading(true)
-      const response = await axios.get(`${API_BASE_URL}/screening/questions/${testType}`)
-      setQuestions(response.data.questions)
-      setResponses(new Array(response.data.questions.length).fill(null))
-      setCurrentStep("questions")
-    } catch (error) {
-      Alert.alert("Error", "Failed to load questions")
-    } finally {
-      setLoading(false)
-    }
+  // const loadQuestions = async (testType) => {
+  //   try {
+  //     setLoading(true)
+  //     const response = await axios.get(`${API_BASE_URL}/screening/questions/${testType}`)
+  //     setQuestions(response.data.questions)
+  //     setResponses(new Array(response.data.questions.length).fill(null))
+  //     setCurrentStep("questions")
+  //   } catch (error) {
+  //     Alert.alert("Error", "Failed to load questions")
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+  const loadQuestions = (test) => {
+  let sampleQuestions = []
+
+  if (test.id === "PHQ-9") {
+    sampleQuestions = [
+      "Little interest or pleasure in doing things?",
+      "Feeling down, depressed, or hopeless?",
+      "Trouble falling or staying asleep, or sleeping too much?",
+      "Feeling tired or having little energy?",
+      "Poor appetite or overeating?",
+    ]
+  } else if (test.id === "GAD-7") {
+    sampleQuestions = [
+      "Feeling nervous, anxious, or on edge?",
+      "Not being able to stop or control worrying?",
+      "Worrying too much about different things?",
+      "Trouble relaxing?",
+      "Being so restless that it is hard to sit still?",
+    ]
+  } else if (test.id === "GHQ-12") {
+    sampleQuestions = [
+      "Have you recently been able to concentrate on what you're doing?",
+      "Have you recently lost much sleep over worry?",
+      "Have you recently felt constantly under strain?",
+      "Have you recently been able to enjoy your normal day-to-day activities?",
+      "Have you recently been feeling unhappy and depressed?",
+    ]
   }
 
-  const handleTestSelect = (test) => {
-    setSelectedTest(test)
-    loadQuestions(test.id)
-  }
+  setQuestions(sampleQuestions)
+  setResponses(new Array(sampleQuestions.length).fill(null))
+  setCurrentStep("questions")
+}
+
+
+  // const handleTestSelect = (test) => {
+  //   setSelectedTest(test)
+  //   loadQuestions(test.id)
+  // }
+const handleTestSelect = (test) => {
+  setSelectedTest(test)
+  loadQuestions(test)
+}
 
   const handleResponseSelect = (questionIndex, value) => {
     const newResponses = [...responses]
@@ -73,27 +111,57 @@ const ScreeningScreen = () => {
     setResponses(newResponses)
   }
 
-  const submitScreening = async () => {
-    const formattedResponses = questions.map((question, index) => ({
-      question,
-      answer: responses[index],
-    }))
+  // const submitScreening = async () => {
+  //   const formattedResponses = questions.map((question, index) => ({
+  //     question,
+  //     answer: responses[index],
+  //   }))
 
-    try {
-      setLoading(true)
-      const response = await axios.post(`${API_BASE_URL}/screening/submit`, {
-        testType: selectedTest.id,
-        responses: formattedResponses,
-      })
+  //   try {
+  //     setLoading(true)
+  //     const response = await axios.post(`${API_BASE_URL}/screening/submit`, {
+  //       testType: selectedTest.id,
+  //       responses: formattedResponses,
+  //     })
 
-      setResult(response.data)
-      setCurrentStep("result")
-    } catch (error) {
-      Alert.alert("Error", "Failed to submit screening")
-    } finally {
-      setLoading(false)
-    }
+  //     setResult(response.data)
+  //     setCurrentStep("result")
+  //   } catch (error) {
+  //     Alert.alert("Error", "Failed to submit screening")
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+const submitScreening = () => {
+  const formattedResponses = questions.map((question, index) => ({
+    question,
+    answer: responses[index],
+  }))
+
+  // Basic scoring logic — sum all selected values
+  const totalScore = responses.reduce((sum, value) => sum + value, 0)
+
+  let severity = "NORMAL"
+  let message = "You're doing well, but remember to take care of yourself."
+
+  // Simple severity logic (adjust thresholds as needed)
+  if (totalScore >= 5 && totalScore < 10) {
+    severity = "MILD"
+    message = "Mild symptoms detected. Consider self-care and monitoring."
+  } else if (totalScore >= 10 && totalScore < 15) {
+    severity = "MODERATE"
+    message = "Moderate symptoms detected. Talking to a professional could help."
+  } else if (totalScore >= 15 && totalScore < 20) {
+    severity = "SEVERE"
+    message = "Severe symptoms. We strongly recommend seeking professional help."
+  } else if (totalScore >= 20) {
+    severity = "CRISIS"
+    message = "Crisis level detected. Immediate professional support is highly recommended."
   }
+
+  setResult({ totalScore, severity, message })
+  setCurrentStep("result")
+}
 
   const resetScreening = () => {
     setSelectedTest(null)

@@ -1,37 +1,62 @@
-"use client"
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
-import { useAuth } from "../context/AuthContext"
+
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  Dimensions,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.png";
+
+const { width } = Dimensions.get("window");
 
 const WelcomeScreen = ({ navigation }) => {
-  const { guestLogin } = useAuth()
+  const { guestLogin } = useAuth();
 
   const handleGuestLogin = async () => {
-    const result = await guestLogin()
+    const result = await guestLogin();
     if (!result.success) {
-      alert(result.message)
+      alert(result.message);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={["#4F46E5", "#7C3AED"]} style={styles.gradient}>
         <View style={styles.content}>
+          {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Digital Psychological Intervention System</Text>
-            <Text style={styles.subtitle}>Your mental health companion for support, screening, and wellness</Text>
+            <Text style={styles.title}>
+              Digital Psychological Intervention System
+            </Text>
+            <Text style={styles.subtitle}>
+              Your mental health companion for support, screening, and wellness
+            </Text>
           </View>
 
+          {/* Illustration */}
           <View style={styles.illustration}>
-            <Text style={styles.illustrationText}>🧠💙</Text>
+            <Image source={logo} style={styles.image} resizeMode="contain" />
           </View>
 
+          {/* Buttons */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("Login")}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => navigation.navigate("Login")}
+            >
               <Text style={styles.primaryButtonText}>Login</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("SignUp")}>
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={() => navigation.navigate("SignUp")}
+            >
               <Text style={styles.secondaryButtonText}>Sign Up</Text>
             </TouchableOpacity>
 
@@ -42,8 +67,8 @@ const WelcomeScreen = ({ navigation }) => {
         </View>
       </LinearGradient>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -60,10 +85,10 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    marginTop: 60,
+    marginTop: 40,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
@@ -78,9 +103,11 @@ const styles = StyleSheet.create({
   illustration: {
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 20,
   },
-  illustrationText: {
-    fontSize: 80,
+  image: {
+    width: width * 0.7,
+    height: width * 0.7,
   },
   buttonContainer: {
     gap: 16,
@@ -119,6 +146,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: "underline",
   },
-})
+});
 
-export default WelcomeScreen
+export default WelcomeScreen;

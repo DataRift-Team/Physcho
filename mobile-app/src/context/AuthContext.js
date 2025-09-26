@@ -19,7 +19,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [token, setToken] = useState(null)
 
-  const API_BASE_URL = "http://localHost:8000/api" // Change this to your backend URL
+  // const API_BASE_URL = "https://441a845fb3c9.ngrok-free.app/api" // ngrok backend URL
+  const API_BASE_URL = "https://physcho.onrender.com/api" // ngrok backend URL
 
   useEffect(() => {
     checkAuthState()
