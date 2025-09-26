@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 // Dynamically set API base URL for emulator, simulator, or device
 
 // For Expo Go or mobile data, use your ngrok URL:
-let API_BASE_URL = "https://441a845fb3c9.ngrok-free.app/api";
+let API_BASE_URL = "https://physcho.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,

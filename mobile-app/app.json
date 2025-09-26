@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "8f6b8c51-cfbb-4dde-95e3-29455d6a928f"
+      }
+    },
+    "android": {
+      "package": "com.manuomar3.digitalpsychmobile"
+    }
+  }
+}
