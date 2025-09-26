@@ -64,7 +64,7 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       {/* You can enable authentication logic here if needed */}
-      {/* 
+    
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
           <Stack.Screen name="Main" component={TabNavigator} />
@@ -76,8 +76,8 @@ const AppNavigator = () => {
           </>
         )}
       </Stack.Navigator>
-      */}
-      <TabNavigator />
+      
+      {/* <TabNavigator /> */}
     </NavigationContainer>
   )
 }

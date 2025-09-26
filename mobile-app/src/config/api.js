@@ -2,12 +2,9 @@ import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // Dynamically set API base URL for emulator, simulator, or device
-let API_BASE_URL = "http://10.0.2.2:5000/api"; // Android emulator default
-if (Platform.OS === "ios") {
-  API_BASE_URL = "http://localhost:5000/api";
-}
-// For physical device, set your computer's LAN IP below
-// Example: API_BASE_URL = "http://192.168.1.100:5000/api";
+
+// For Expo Go or mobile data, use your ngrok URL:
+let API_BASE_URL = "https://441a845fb3c9.ngrok-free.app/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -28,19 +28,11 @@ const allowedOrigins = [
   // process.env.EXPO_TUNNEL_URL,       // Expo tunnel URL (optional)
 ]
 
-// Middleware: CORS
+// Middleware: CORS (allow all origins for development, including ngrok and mobile)
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, Postman)
-      if (!origin) return callback(null, true)
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true)
-      } else {
-        return callback(new Error("CORS policy: This origin is not allowed"))
-      }
-    },
-    credentials: true, // Allow cookies and auth headers
+    origin: '*',
+    credentials: true,
   })
 )
 
@@ -68,6 +60,7 @@ app.use('/api/counsellors', counsellorRoutes)
 app.get("/api/health", (req, res) => {
   res.json({ message: "Digital Psychological Intervention System API is running" })
 })
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
