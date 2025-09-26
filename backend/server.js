@@ -24,7 +24,8 @@ const allowedOrigins = [
   "http://127.0.0.1:3000",           // React web alternate
   "exp://127.0.0.1:19000", 
   "exp://10.132.217.211:8081",
-  "http://localhost:5173",          
+  "http://localhost:5173",  
+  "https://physcho.vercel.app",  // Vercel frontend    
   // process.env.EXPO_TUNNEL_URL,       // Expo tunnel URL (optional)
 ]
 
