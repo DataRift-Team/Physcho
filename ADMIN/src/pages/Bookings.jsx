@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Calendar, Clock, User, Filter } from "lucide-react"
-import axios from "axios"
+import api from "../config/api"
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([])
@@ -15,7 +15,7 @@ const Bookings = () => {
 
   const loadBookings = async () => {
     try {
-      const response = await axios.get("/api/bookings/all")
+  const response = await api.get("/bookings/all")
       setBookings(response.data)
     } catch (error) {
       console.error("Failed to load bookings:", error)
@@ -26,7 +26,7 @@ const Bookings = () => {
 
   const updateBookingStatus = async (bookingId, newStatus) => {
     try {
-      await axios.patch(`/api/bookings/${bookingId}/status`, { status: newStatus })
+  await api.patch(`/bookings/${bookingId}/status`, { status: newStatus })
       setBookings(bookings.map((booking) => (booking._id === bookingId ? { ...booking, status: newStatus } : booking)))
     } catch (error) {
       console.error("Failed to update booking status:", error)

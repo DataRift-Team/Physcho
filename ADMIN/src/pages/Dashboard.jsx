@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Users, Calendar, MessageSquare, AlertTriangle, Activity } from "lucide-react"
-import axios from "axios"
+import api from "../config/api"
 
 const Dashboard = () => {
   const [analytics, setAnalytics] = useState(null)
@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const loadAnalytics = async () => {
     try {
-      const response = await axios.get("/api/admin/analytics")
+  const response = await api.get("/admin/analytics")
       setAnalytics(response.data)
     } catch (error) {
       console.error("Failed to load analytics:", error)

@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react"
-import axios from "axios"
+import api from "../config/api"
 
 const AuthContext = createContext()
 
@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("adminToken")
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-      checkAuth()
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+  checkAuth()
     } else {
       setLoading(false)
     }
@@ -28,8 +28,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get("/api/auth/me")
-      setUser(response.data.user)
+    const response = await api.get("/auth/me")
+    setUser(response.data.user)
     } catch (error) {
       localStorage.removeItem("adminToken")
       delete axios.defaults.headers.common["Authorization"]
@@ -40,15 +40,15 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post("/api/auth/login", { email, password })
-      const { token, user: userData } = response.data
+    const response = await api.post("/auth/login", { email, password })
+    const { token, user: userData } = response.data
 
-      // Allow both admin and student roles
-      localStorage.setItem("adminToken", token)
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
-      setUser(userData)
+    // Allow both admin and student roles
+    localStorage.setItem("adminToken", token)
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+    setUser(userData)
 
-      return { success: true }
+    return { success: true }
     } catch (error) {
       return {
         success: false,
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("adminToken")
-    delete axios.defaults.headers.common["Authorization"]
+  delete api.defaults.headers.common["Authorization"]
     setUser(null)
   }
 

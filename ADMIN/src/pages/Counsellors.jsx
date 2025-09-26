@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
+import api from "../config/api"
 
 const initialForm = {
   name: "",
@@ -18,8 +18,8 @@ const Counsellors = () => {
   const [editingId, setEditingId] = useState(null)
 
   const fetchCounsellors = async () => {
-    const res = await axios.get("/api/counsellors")
-    setCounsellors(res.data)
+  const res = await api.get("/counsellors")
+  setCounsellors(res.data)
   }
 
   useEffect(() => {
@@ -39,9 +39,9 @@ const Counsellors = () => {
     setError("")
     try {
       if (editingId) {
-        await axios.put(`/api/counsellors/${editingId}`, form)
+        await api.put(`/counsellors/${editingId}`, form)
       } else {
-        await axios.post("/api/counsellors", form)
+        await api.post("/counsellors", form)
       }
       setForm(initialForm)
       setEditingId(null)
@@ -66,7 +66,7 @@ const Counsellors = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this counsellor?")) {
-      await axios.delete(`/api/counsellors/${id}`)
+  await api.delete(`/counsellors/${id}`)
       fetchCounsellors()
     }
   }

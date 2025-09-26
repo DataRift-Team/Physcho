@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { MessageSquare, User, Clock, Check, X, Eye } from "lucide-react"
-import axios from "axios"
+import api from "../config/api"
 
 const Forum = () => {
   const [pendingPosts, setPendingPosts] = useState([])
@@ -16,7 +16,7 @@ const Forum = () => {
 
   const loadPendingPosts = async () => {
     try {
-      const response = await axios.get("/api/forum/pending")
+  const response = await api.get("/forum/pending")
       setPendingPosts(response.data)
     } catch (error) {
       console.error("Failed to load pending posts:", error)
@@ -27,7 +27,7 @@ const Forum = () => {
 
   const updatePostStatus = async (postId, status) => {
     try {
-      await axios.patch(`/api/forum/posts/${postId}/status`, { status })
+  await api.patch(`/forum/posts/${postId}/status`, { status })
       setPendingPosts(pendingPosts.filter((post) => post._id !== postId))
       setShowModal(false)
       setSelectedPost(null)

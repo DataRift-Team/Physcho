@@ -15,7 +15,7 @@ import {
   LineChart,
   Line,
 } from "recharts"
-import axios from "axios"
+import api from "../config/api"
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState(null)
@@ -27,7 +27,7 @@ const Analytics = () => {
 
   const loadAnalytics = async () => {
     try {
-      const response = await axios.get("/api/admin/analytics")
+  const response = await api.get("/admin/analytics")
       setAnalytics(response.data)
     } catch (error) {
       console.error("Failed to load analytics:", error)

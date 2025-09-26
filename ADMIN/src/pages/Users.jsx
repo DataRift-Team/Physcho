@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Search, Download } from "lucide-react"
-import axios from "axios"
+import api from "../config/api"
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -16,7 +16,7 @@ const Users = () => {
 
   const loadUsers = async () => {
     try {
-      const response = await axios.get("/api/admin/users")
+  const response = await api.get("/admin/users")
       setUsers(response.data)
     } catch (error) {
       console.error("Failed to load users:", error)

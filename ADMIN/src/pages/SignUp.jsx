@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import axios from "axios"
+import api from "../config/api"
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -23,8 +23,7 @@ const SignUp = () => {
     setLoading(true);
     setError("");
     try {
-      // Change the URL to your backend API endpoint
-      await axios.post("/api/auth/signup", form);
+  await api.post("/auth/signup", form);
       navigate("/login");
     } catch (err) {
       setError(
